@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="pet01" class="com.dto.Cat">
+<constructor-arg name = "catName" value= "나비"/>
+<constructor-arg name = "catAge" value= "3"/>
+</bean>
+
+<bean id ="firstStudent" class="com.dto.Student">
+<constructor-arg name ="name" value="유관순"></constructor-arg>
+<constructor-arg name ="age" value="20"></constructor-arg>
+<constructor-arg name="cat" ref="pet01"></constructor-arg><!-- 객체를 생성할때는 ref를 사용한다. -->
+ 
+</bean>
+<!-- <class="com.dto.Student"></bean>Student에는 기본 생성자가 없기때문에 에러 발생 -->
+
+</beans>
