@@ -9,6 +9,7 @@ public class Student {
 	
 	@Autowired
 	private Cat cat;
+	//멤버
 	
 	
 	public Student() {
