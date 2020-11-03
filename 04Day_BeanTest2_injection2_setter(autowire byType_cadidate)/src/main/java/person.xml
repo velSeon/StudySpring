@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+
+<bean id="xx" class="com.spring.Cat">
+	<property name="catage" value="10"></property>
+	<property name="catName" value="야옹이"></property>
+</bean>
+
+<bean id="yy" class="com.spring.Cat" autowire-candidate="false">
+	<property name="catage" value="20"></property>
+	<property name="catName" value="뭉크"></property>
+</bean>
+
+<bean id="onePerson" class="com.spring.Person" autowire="byType">
+	<property name="username" value="홍길동"></property>
+</bean>
+</beans>

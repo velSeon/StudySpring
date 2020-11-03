@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+
+<bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+	<property name="locations"><!--  property source,  -->
+	<list>
+	<value>classpath:com/config/jdbc.properties</value><!-- classpath 빼도 사용가능함. -->
+	</list>
+	</property>
+</bean>
+
+<bean id="xxx" class="com.dto.Student">
+	<property name ="name" value="${jdbc.name}"/> <!-- setName 호출  -->
+	<property name ="age" value="${jdbc.age}"/>
+</bean>
+</beans>

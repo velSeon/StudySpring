@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
+<!-- 공통기능 제공 AOP bean 등록 -->
+<bean id ="beforeAspect" class ="com.aspect.PersonBeforeAspect"/>
+<!-- aspect 설정 : advice를 어떤 pointcut에 적용할 지 설정 -->
+<aop:config>
+
+	<aop:aspect id= "mesgAspect" ref="beforeAspect">
+	<!-- 공통로직 함수에 pointcut등록 -->
+	<aop:pointcut id="publicMethod" expression="execution(* getInfo(..))"></aop:pointcut>
+	<!-- 수식어(public 리턴타입 * com..패키지아래 *모든 클래스. *모든 함수(..)매개변수 -->
+	<aop:before pointcut-ref="publicMethod" method="mesgBefore"/>
+	<!-- 실행할 공통로직함수 등록 -->
+	</aop:aspect>
+</aop:config>
+
+<!-- target class 생성(핵심로직 -->
+<bean id ="xxx" class ="com.spring.Person"></bean>
+</beans>

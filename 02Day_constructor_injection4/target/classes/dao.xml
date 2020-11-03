@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+<bean id ="DeptDAO" class="com.dao.DeptDAO">
+
+</bean>
+
+<bean id ="DeptService" class="com.service.DeptService">
+<constructor-arg name = "dao" ref="DeptDAO"></constructor-arg>
+</bean>
+
+<!-- <class="com.dto.Student"></bean>Student에는 기본 생성자가 없기때문에 에러 발생 -->
+
+</beans>
