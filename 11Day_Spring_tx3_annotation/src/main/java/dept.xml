@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+
+<context:annotation-config></context:annotation-config>
+<!-- jdbc연동 -->
+<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+<property name="location">
+<value>classpath:db.properties</value>
+</property>
+</bean>
+
+<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+<property name="driverClassName" value="${driver}"></property>
+<property name="url" value="${url}"></property>
+<property name="username" value="${username}"></property>
+<property name="password" value="${password}"></property>
+</bean>
+
+
+
+
+<!-- DataSourceTransactionManager 설정 dataSource 주입, tx 설정 시작 -->
+<bean id="transactionManager" class ="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+<property name="dataSource" ref="dataSource"></property>
+</bean>
+<!-- transaction 관련 어노테이션 활성화 및 관리 manager 주입 -->
+<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false"/>
+<!-- DataSourceTransactionManager 설정 -->
+
+
+<!-- jdbcTemplate 빈 생성 , dataSource주입-->
+<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+<property name="dataSource" ref="dataSource"></property>
+</bean>
+
+<!-- jdbc 연동 dao 생성 및 jdbcTemplate 주입 -->
+<bean id="ProductDAO" class="com.dao.ProductDAO">
+<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+</bean>
+
+
+<!-- Service 생성 및 dao 주입, main에서 Service get, 사용 -->
+<bean id="ProductService" class="com.service.ProductService">
+<property name="dao" ref="ProductDAO"></property>
+</bean>
+
+</beans>

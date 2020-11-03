@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	<context:annotation-config />
+	<context:component-scan base-package="com.*"></context:component-scan>
+	<!-- -시작 -->
+	<context:property-placeholder
+		location="classpath:com/config/jdbc.properties" />
+
+
+	<!-- 2.DBCP2 -->
+
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp2.BasicDataSource">
+		<property name="driverClassName" value="${driver}"></property>
+		<property name="url" value="${url}"></property>
+		<property name="username" value="${userid}"></property>
+		<property name="password" value="${password}"></property>
+	</bean>
+
+
+	<!-- 3.SqlsessionFactoryBean --><!-- MySqlSessionFactory와 같은 역할, sSqlSessionTempalate의 생성 -->
+	<bean id="sessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" /><!-- dataSource주입 -->
+		<property name="mapperLocations"><!-- mapper정보 -->
+			<list>
+				<value>classpath:com/config/DeptMapper.xml</value>
+			</list>
+		</property>
+		<property name="typeAliases"><!-- DTO지정 -->
+			<list>
+				<value>com.dto.DeptDTO</value><!-- 실제 Alias는 각 클래스에서 @Alias()사용 지정 -->
+			</list>
+		</property>
+	</bean>
+
+	<!-- 4.SqlsessionTemplate --><!-- Sqlsession과 같은 기능 -->
+	<bean id="sessionTemplate"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory"
+			ref="sessionFactory"></constructor-arg>
+	</bean>
+	<!-- ///종료/// -->
+	<bean id="dao" class="com.dao.DeptDAO" />
+	<bean id="service" class="com.service.DeptService" />
+</beans>
